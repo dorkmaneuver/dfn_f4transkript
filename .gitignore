@@ -53,5 +53,6 @@ Temporary Items
 # Backup files
 *.bak
 
-# Ignore custom folder
-CLIENT_DATA/custom/*
+# Ignore license in custom folder
+CLIENT_DATA/custom/license.dat
+CLIENT_DATA/custom/License.dat
