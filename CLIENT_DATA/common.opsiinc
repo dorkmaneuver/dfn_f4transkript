@@ -1,0 +1,94 @@
+; This sourcecode published under the Terms of the General Public License.
+; Written by Eric Esser, Wissenschaftszentrum Berlin, eric.esser@wzb.eu.
+; Inspired by uib gmbh (www.uib.de), Thomas Besser (KIT), Detlef Krummel (GEI) and Tobias Friede (Fraunhofer)
+
+setloglevel = 6
+;  Log Errors in Logfile but don't abort:
+ExitOnError=false
+; Show syntax errors in the script:
+ScriptErrorMessages=on
+; Dont trace step by step through the script:
+TraceMode=off
+; let started programs run in front of the winst window
+StayOnTop=false
+
+requiredWinstVersion >= "4.11.3.3"
+
+DefVar $ProductId$ 
+DefVar $PrettyName$
+DefVar $Setupfile$
+DefVar $InstallDir$
+DefVar $NsisInstallBatch$
+DefVar $LogDir$
+DefVar $TaskName$
+DefVar $MinimumSpace$
+DefVar $ExitCode$
+DefVar $ErrorMsg$
+DefVar $PathToExe$
+DefVar $KindOfLicense$ 
+DefVar $DesktopIconName$
+DefVar $Property_DesktopIcon$
+DefVar $ActualExe$
+DefStringList $TaskNameList$
+
+
+include_append "%ScriptPath%\lib\check_nsis_exitcode.opsiscript"
+include_append "%ScriptPath%\lib\killtask.opsiinc"
+include_insert "%ScriptPath%\lib\insert_get_licensekey.opsiinc"
+include_append "%ScriptPath%\lib\section_linkfolder.opsiinc"
+;==========================================================================================================
+; Variables 
+
+; $ProductId$ is the name of the product in opsi, only lower letters, no umlauts, no white spaces, use '-' as a seperator
+Set $ProductId$            = "dfn_f4transkript"
+Set $Setupfile$            = "f4transkript_setup_v6.exe"
+Set $LogDir$ 					     = "%SystemDrive%\tmp"
+Set $InstallDir$           = "%ProgramFiles32Dir%\f4transkript"
+Set $MinimumSpace$         = "118 MB"
+Set $PrettyName$			     = "F4 Audiotranskription"
+Set $ActualExe$						 = "f4transkript.exe"
+Set $TaskNameList$		     = addtolist($TaskNameList$, $ActualExe$)
+Set $TaskNameList$		     = addtolist($TaskNameList$, "f4.exe")
+
+Set $Property_DesktopIcon$ = GetProductProperty("desktopicon", "true")
+Set $DesktopIconName$ 		 = "f4transkript"
+Set $PathToExe$         	 = $InstallDir$ + "\" + $ActualExe$  
+;==========================================================================================================
+; Program logic
+comment "Show product picture"
+ShowBitmap "%ScriptPath%\" + $ProductId$ + ".png" $PrettyName$
+
+for %task% in $TaskNameList$ do sub_killtask
+
+Set $KindOfLicense$ = GetProductProperty("kind-of-license" , "testversion" )
+Switch $KindOfLicense$
+    Case "testversion"
+        Set $LicenseKey$ = ""
+    EndCase
+    Case "opsi-property"
+        Set $LicenseKey$ = GetProductProperty("licensekey", "none" )
+        if (($LicenseKey$ = "") or ($LicenseKey$ = "none"))
+          LogError "No license key found in OPSI, though kind-of-license property set to opsi-property. Please enter valid license key in OPSI or change the kind of licensing."
+          isFatalError "No license key found in OPSI, though kind-of-license property set to opsi-property"
+        endif
+    EndCase
+    Case  "licensepool" 
+        Set $LicensePool$ = GetProductProperty("licensepoolname" , "p_" + $ProductId$ )
+        Sub_get_licensekey 
+        if (($LicenseKey$ = "") or ($LicenseKey$ = "none"))
+          LogError "No license pool specified in OPSI, though kind-of-license property set to license pool. Please enter valid license pool in OPSI or change the kind of licensing."
+          isFatalError "No license pool specified in OPSI, though kind-of-license property set to license pool"
+        endif                 
+    EndCase
+		Case "license-file" 
+ 				if (FileExists("%ScriptPath%\custom\license.key"))
+					Files_copy_license_file
+				else
+					LogError "No license.dat file found in custom folder."
+					isFatalError "No license.dat file found in custom folder."
+				endif                  
+		EndCase
+EndSwitch
+
+
+

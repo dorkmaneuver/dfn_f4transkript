@@ -13,6 +13,7 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+*.exe
 
 # Windows shortcuts
 *.lnk
@@ -45,3 +46,12 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# OPSI files
+*.opsi
+
+# Backup files
+*.bak
+
+# Ignore custom folder
+CLIENT_DATA/custom/*

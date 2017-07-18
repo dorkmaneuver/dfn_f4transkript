@@ -1,0 +1,28 @@
+; This sourcecode published under the Terms of the General Public License.
+; Written by Eric Esser, Wissenschaftszentrum Berlin, eric.esser@wzb.eu.
+; Inspired by uib gmbh (www.uib.de), Thomas Besser (KIT), Detlef Krummel (GEI) and Tobias Friede (Fraunhofer)
+
+DefVar $UninstallProgram$
+
+Message "Uninstalling " + $ProductId$ + " ..."
+Set $UninstallProgram$ = $InstallDir$ + "\uninstall.exe"
+
+if (not($InstallDir$ = '')) and FileExists($UninstallProgram$)
+  comment "Uninstall program found, starting uninstall"
+  Winbatch_uninstall_nsis /WaitforProcessending "Au_.exe" /Timeoutseconds 10
+  sub_check_exitcode
+endif
+
+
+;if (not($InstallDir$ = '')) and (not($InstallDir$ = "not used"))
+;   Files_uninstall
+;endif
+
+;-----------------------------------------------------
+[Winbatch_uninstall_nsis]
+"$UninstallProgram$" /S
+;-----------------------------------------------------
+
+;[Files_uninstall]
+;del -sf "$InstallDir$\"
+;-----------------------------------------------------
