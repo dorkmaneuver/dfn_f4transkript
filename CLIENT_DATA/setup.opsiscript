@@ -30,25 +30,38 @@ else
    endif
    
    Message "Installing " + $ProductId$ + " ..."
-   
-   if not(FileExists("C:\tmp"))
+   Comment "Installing " + $ProductId$ + " ..." 
+   if not(FileExists("%opsiTmpDir%"))
      LogError "Directory C:\opsi.org\tmp does not exist"
      isFatalError "C:\opsi.org\tmp does not exist"
    else
-     Set $NsisInstallBatch$ = "C:\tmp\f4\f4transkript_setup_v6.exe /S"
+     Set $NsisInstallBatch$ = "%opsiTmpDir%\f4\f4transkript_setup_v6.exe /S"
      Set $NsisInstallBatch$ = $NsisInstallBatch$ + ' /D="' + $InstallDir$ + '"'
-     if (($KindOfLicense$ = "licensepool") or ($KindOfLicense$ = "opsi-property"))
-        Set $NsisInstallBatch$ = $NsisInstallBatch$ + ' /SERIAL="' + $Licensekey$ + '"'
-     endif
 
      comment "Start setup program"
-     ChangeDirectory "C:\tmp\f4"        
-
      Files_copy_installation_file
+     ChangeDirectory "%opsiTmpDir%\f4"
      Winbatch_install_nsis
-     ;Sub_check_exitcode	
+     Sub_check_exitcode	
+		 ChangeDirectory "%ScriptPath%"  
      Files_delete_tmp
-     ;Sub_check_exitcode	
+     Sub_check_exitcode	
+
+     if not($KindOfLicense$ = "testversion")
+       Message "Activating license..." 
+       Comment "Activating license..." 
+     endif
+
+     if (($KindOfLicense$ = "licensepool") or ($KindOfLicense$ = "opsi-property"))
+       Set $ActivationBatch$ = '"' + $InstallDir$ + '\' + $ActualExe$ + '" /s="' + $LicenseKey$ + '"'
+       Winbatch_activate
+       Sub_check_exitcode	
+       ;for %task% in $TaskNameList$ do sub_killtask
+     endif
+     if ($KindOfLicense$ = "license-file")
+       Files_copy_license_file
+       Sub_check_exitcode	 
+     endif
    endif
 
 	;Setting the desktop icon or removing it - as set in the config editor
@@ -65,9 +78,7 @@ else
 		  include_insert "%ScriptPath%\custom\" + $CustomPostInstall$
 	  endif
   endif
-
 endif
-
 
 
 ; ----------------------------------------------------------------
@@ -78,12 +89,15 @@ endif
 ;NSIS Nullsoft Scriptable Install System 
 $NsisInstallBatch$
 
+[Winbatch_activate]
+$ActivationBatch$ 
+
 [Files_copy_installation_file]
-copy "%ScriptPath%\$Setupfile$" "C:\tmp\f4"
+copy "%ScriptPath%\$Setupfile$" "%opsiTmpDir%\f4"
 
 [Files_copy_license_file]
-copy "%ScriptPath%\custom\license.key" "C:\tmp\f4"
+copy "%ScriptPath%\custom\$LicenseFile$" $InstallDir$
 
 [Files_delete_tmp]
-del "C:\tmp\f4"
+del "%opsiTmpDir%\f4"
 

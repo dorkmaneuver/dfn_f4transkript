@@ -6,8 +6,8 @@ incremental: False
 [Product]
 type: localboot
 id: dfn_f4transkript
-name: F4 Audiotranskription
-description: f4 is an audio transcription program with compatible timestamps for MaxQDA
+name: f4transkript
+description: f4transkript is an audio and video transcription program with compatible timestamps for MaxQDA
 advice: 
 version: 6.2.4
 priority: 0
@@ -73,8 +73,8 @@ values: [""]
 default: [""]
 
 [Changelog]
-dfn_f4 (6-1) stable; urgency=low
+dfn_f4transkript (6.2.4-1) stable; urgency=low
 
-	* initial: created by opsi-setup-detector
+* initial: created by Eric Esser
 
- -- opsisetupdetector.exe <info@uib.de>  22.06.2017 16:15:07
+ -- Eric Esser <eric.esser@wzb.eu>  Tue, 18 Jul 2017 13:09:38 +0000

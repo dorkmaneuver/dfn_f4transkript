@@ -19,6 +19,7 @@ DefVar $PrettyName$
 DefVar $Setupfile$
 DefVar $InstallDir$
 DefVar $NsisInstallBatch$
+DefVar $ActivationBatch$
 DefVar $LogDir$
 DefVar $TaskName$
 DefVar $MinimumSpace$
@@ -29,6 +30,7 @@ DefVar $KindOfLicense$
 DefVar $DesktopIconName$
 DefVar $Property_DesktopIcon$
 DefVar $ActualExe$
+DefVar $LicenseFile$
 DefStringList $TaskNameList$
 
 
@@ -42,11 +44,12 @@ include_append "%ScriptPath%\lib\section_linkfolder.opsiinc"
 ; $ProductId$ is the name of the product in opsi, only lower letters, no umlauts, no white spaces, use '-' as a seperator
 Set $ProductId$            = "dfn_f4transkript"
 Set $Setupfile$            = "f4transkript_setup_v6.exe"
-Set $LogDir$ 					     = "%SystemDrive%\tmp"
+Set $LogDir$ 					     = "%opsiLogDir%" 
 Set $InstallDir$           = "%ProgramFiles32Dir%\f4transkript"
 Set $MinimumSpace$         = "118 MB"
-Set $PrettyName$			     = "F4 Audiotranskription"
+Set $PrettyName$			     = "f4transkript"
 Set $ActualExe$						 = "f4transkript.exe"
+Set $LicenseFile$					 = "licence.dat"
 Set $TaskNameList$		     = addtolist($TaskNameList$, $ActualExe$)
 Set $TaskNameList$		     = addtolist($TaskNameList$, "f4.exe")
 
@@ -81,11 +84,9 @@ Switch $KindOfLicense$
         endif                 
     EndCase
 		Case "license-file" 
- 				if (FileExists("%ScriptPath%\custom\license.key"))
-					Files_copy_license_file
-				else
-					LogError "No license.dat file found in custom folder."
-					isFatalError "No license.dat file found in custom folder."
+ 				if not(FileExists("%ScriptPath%\custom\"+$LicenseFile$))
+					LogError "No license file found in custom folder."
+					isFatalError "No license file found in custom folder."
 				endif                  
 		EndCase
 EndSwitch

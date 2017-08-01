@@ -4,9 +4,17 @@
 ;****************************************
 
 [Actions]
-requiredWinstVersion >= "4.11.3.3"
 
+;==========================================================================================================
+; Includes
 include_insert "%ScriptPath%\common.opsiinc"
+
+;==========================================================================================================
+; Variables
+DefVar $CustomPostDeinstall$
+
+;==========================================================================================================
+; Program logic
 
 comment "Show product picture"
 ShowBitmap "%ScriptPath%\" + $ProductId$ + ".png" $PrettyName$
