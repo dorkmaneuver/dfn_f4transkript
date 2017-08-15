@@ -31,6 +31,7 @@ DefVar $DesktopIconName$
 DefVar $Property_DesktopIcon$
 DefVar $ActualExe$
 DefVar $LicenseFile$
+DefVar $SetupVersion$
 DefStringList $TaskNameList$
 
 
@@ -43,18 +44,18 @@ include_append "%ScriptPath%\lib\section_linkfolder.opsiinc"
 
 ; $ProductId$ is the name of the product in opsi, only lower letters, no umlauts, no white spaces, use '-' as a seperator
 Set $ProductId$            = "dfn_f4transkript"
-Set $Setupfile$            = "f4transkript_setup_v6.exe"
 Set $LogDir$ 					     = "%opsiLogDir%" 
 Set $InstallDir$           = "%ProgramFiles32Dir%\f4transkript"
 Set $MinimumSpace$         = "118 MB"
 Set $PrettyName$			     = "f4transkript"
-Set $ActualExe$						 = "f4transkript.exe"
 Set $LicenseFile$					 = "licence.dat"
 Set $TaskNameList$		     = addtolist($TaskNameList$, $ActualExe$)
 Set $TaskNameList$		     = addtolist($TaskNameList$, "f4.exe")
-
 Set $Property_DesktopIcon$ = GetProductProperty("desktopicon", "true")
 Set $DesktopIconName$ 		 = "f4transkript"
+Set $ActualExe$						 = "f4transkript.exe"
+Set $SetupVersion$	       = strPart("%installingProdVersion%", "1", calculate(strPos("%installingProdVersion%","-") + "-" + "1" ))
+Set $Setupfile$            = "f4transkript-" + $SetupVersion$ + "-setup.exe"
 Set $PathToExe$         	 = $InstallDir$ + "\" + $ActualExe$  
 ;==========================================================================================================
 ; Program logic

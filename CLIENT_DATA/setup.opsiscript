@@ -35,7 +35,7 @@ else
      LogError "Directory C:\opsi.org\tmp does not exist"
      isFatalError "C:\opsi.org\tmp does not exist"
    else
-     Set $NsisInstallBatch$ = "%opsiTmpDir%\f4\f4transkript_setup_v6.exe /S"
+     Set $NsisInstallBatch$ = "%opsiTmpDir%\f4\" + $Setupfile$ +" /S"
      Set $NsisInstallBatch$ = $NsisInstallBatch$ + ' /D="' + $InstallDir$ + '"'
 
      comment "Start setup program"
