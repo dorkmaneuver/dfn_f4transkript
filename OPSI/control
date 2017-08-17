@@ -1,5 +1,5 @@
 [Package]
-version: 1
+version: 2
 depends: 
 incremental: False
 
@@ -73,6 +73,12 @@ values: [""]
 default: [""]
 
 [Changelog]
+dfn_f4transkript (6.2.5-2) stable; urgency=low
+
+Bug fixed, Task was not killed before install so that the running program wasn't updated.
+
+ -- Eric Esser <eric.esser@wzb.eu>  Thu, 17 Aug 2017 13:39:45 +0000
+
 dfn_f4transkript (6.2.5-1) stable; urgency=low
 
  * Update auf 6.2.5

@@ -49,14 +49,15 @@ Set $InstallDir$           = "%ProgramFiles32Dir%\f4transkript"
 Set $MinimumSpace$         = "118 MB"
 Set $PrettyName$			     = "f4transkript"
 Set $LicenseFile$					 = "licence.dat"
-Set $TaskNameList$		     = addtolist($TaskNameList$, $ActualExe$)
-Set $TaskNameList$		     = addtolist($TaskNameList$, "f4.exe")
 Set $Property_DesktopIcon$ = GetProductProperty("desktopicon", "true")
 Set $DesktopIconName$ 		 = "f4transkript"
 Set $ActualExe$						 = "f4transkript.exe"
 Set $SetupVersion$	       = strPart("%installingProdVersion%", "1", calculate(strPos("%installingProdVersion%","-") + "-" + "1" ))
 Set $Setupfile$            = "f4transkript-" + $SetupVersion$ + "-setup.exe"
 Set $PathToExe$         	 = $InstallDir$ + "\" + $ActualExe$  
+Set $TaskNameList$		     = addtolist($TaskNameList$, $ActualExe$)
+Set $TaskNameList$		     = addtolist($TaskNameList$, "f4.exe")
+
 ;==========================================================================================================
 ; Program logic
 comment "Show product picture"
