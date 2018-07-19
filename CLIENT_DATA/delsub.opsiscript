@@ -3,26 +3,32 @@
 ; Inspired by uib gmbh (www.uib.de), Thomas Besser (KIT), Detlef Krummel (GEI) and Tobias Friede (Fraunhofer)
 
 DefVar $UninstallProgram$
+DefStringList $InstallDirs$
+DefStringList $UninstallFiles$
+
+Set $InstallDirs$ = addtolist($InstallDirs$, $InstallDir$)
+Set $InstallDirs$ = addtolist($InstallDirs$, "%ProgramFiles32Dir%\f4transkript")
+Set $InstallDirs$ = addtolist($InstallDirs$, "%ProgramFiles32Dir%\f4_2012")
+
+Set $UninstallFiles$ = addtolist($UninstallFiles$, "uninstall.exe")
+Set $UninstallFiles$ = addtolist($UninstallFiles$, "unins000.exe")
 
 Message "Uninstalling " + $ProductId$ + " ..."
-Set $UninstallProgram$ = $InstallDir$ + "\uninstall.exe"
 
-if (not($InstallDir$ = '')) and FileExists($UninstallProgram$)
+for %InstallDir% in $InstallDirs$ do sub_check_install_path
+
+[sub_check_install_path]
+for %UninstallFile% in $UninstallFiles$ do sub_check_uninstall_file
+
+[sub_check_uninstall_file]
+Set $UninstallProgram$ = "%InstallDir%" + "\" + "%UninstallFile%"
+if (FileExists($UninstallProgram$))
   comment "Uninstall program found, starting uninstall"
   Winbatch_uninstall_nsis /WaitforProcessending "Au_.exe" /Timeoutseconds 10
   sub_check_exitcode
 endif
 
-
-;if (not($InstallDir$ = '')) and (not($InstallDir$ = "not used"))
-;   Files_uninstall
-;endif
-
 ;-----------------------------------------------------
 [Winbatch_uninstall_nsis]
 "$UninstallProgram$" /S
-;-----------------------------------------------------
-
-;[Files_uninstall]
-;del -sf "$InstallDir$\"
 ;-----------------------------------------------------

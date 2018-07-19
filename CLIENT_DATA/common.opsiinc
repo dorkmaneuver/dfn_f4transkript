@@ -18,7 +18,7 @@ DefVar $ProductId$
 DefVar $PrettyName$
 DefVar $Setupfile$
 DefVar $InstallDir$
-DefVar $NsisInstallBatch$
+DefVar $InstallBatch$
 DefVar $ActivationBatch$
 DefVar $LogDir$
 DefVar $TaskName$
@@ -35,7 +35,7 @@ DefVar $SetupVersion$
 DefStringList $TaskNameList$
 
 
-include_append "%ScriptPath%\lib\check_nsis_exitcode.opsiscript"
+include_append "%ScriptPath%\lib\check_inno_exitcode.opsiinc"
 include_append "%ScriptPath%\lib\killtask.opsiinc"
 include_insert "%ScriptPath%\lib\insert_get_licensekey.opsiinc"
 include_append "%ScriptPath%\lib\section_linkfolder.opsiinc"
@@ -45,7 +45,7 @@ include_append "%ScriptPath%\lib\section_linkfolder.opsiinc"
 ; $ProductId$ is the name of the product in opsi, only lower letters, no umlauts, no white spaces, use '-' as a seperator
 Set $ProductId$            = "dfn_f4transkript"
 Set $LogDir$ 					     = "%opsiLogDir%" 
-Set $InstallDir$           = "%ProgramFiles32Dir%\f4transkript"
+Set $InstallDir$           = "%ProgramFiles32Dir%\f4transkript 7"
 Set $MinimumSpace$         = "118 MB"
 Set $PrettyName$			     = "f4transkript"
 Set $LicenseFile$					 = "licence.dat"
