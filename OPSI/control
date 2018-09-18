@@ -9,8 +9,7 @@ id: dfn_f4transkript
 name: f4transkript
 description: f4transkript is an audio and video transcription program with compatible timestamps for MaxQDA
 advice: 
-
-version: 7.0.2
+version: 7.0.3
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -74,7 +73,14 @@ values: [""]
 default: [""]
 
 [Changelog]
-dev_dfn_f4transkript (7.0.2-1) stable; urgency=low
+dfn_f4transkript (7.0.3-1) stable; urgency=low
+
+* Doppelter Aufruf der Installation korrigiert
+* Update auf 7.0.2, exe getauscht.
+
+ -- Eric Esser <eric.esser@wzb.eu>  Tue, 18 Sep 2018 13:07:20 +0000
+
+dfn_f4transkript (7.0.2-1) stable; urgency=low
 
 Update auf 7.0.2, exe getauscht.
 

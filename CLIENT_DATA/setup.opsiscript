@@ -91,7 +91,7 @@ endif
 ; You may create setup answer file by: setup.exe /SAVEINF="filename"
 ; You may use an answer file by the parameter /LOADINF="filename"
 $InstallBatch$
-"%ScriptPath%\f4transkript-7.0.2-setup.exe" 
+;"%ScriptPath%\f4transkript-7.0.2-setup.exe" 
 
 [Winbatch_activate]
 $ActivationBatch$ 
