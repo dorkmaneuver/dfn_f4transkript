@@ -9,7 +9,9 @@ id: dfn_f4transkript
 name: f4transkript
 description: f4transkript is an audio and video transcription program with compatible timestamps for MaxQDA
 advice: 
-version: 7.0.5
+
+
+version: 7.0.6
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -73,6 +75,12 @@ values: [""]
 default: [""]
 
 [Changelog]
+dfn_f4transkript (7.0.6-1) stable; urgency=low
+
+Update auf 7.0.6, exe getauscht.
+
+ -- Eric Esser <eric.esser@wzb.eu>  Wed, 05 Dec 2018 13:37:44 +0000
+
 dfn_f4transkript (7.0.4-2) stable; urgency=low
 
 "Error: Could not find include file :section_sub_get_licensekey.opsiinc" - gefixt.
